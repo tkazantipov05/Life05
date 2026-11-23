@@ -1,0 +1,20 @@
+{
+  "name": "LIFE OS — личная книга",
+  "short_name": "LIFE OS",
+  "description": "Планы, привычки, дневник и саморазвитие в формате личной книги.",
+  "lang": "ru",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ece4d3",
+  "theme_color": "#283832",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

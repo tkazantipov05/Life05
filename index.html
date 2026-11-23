@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#ece4d3" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="LIFE OS" />
+  <meta name="description" content="LIFE OS — личная книга планов, привычек и дневниковых записей." />
+  <title>LIFE OS — моя личная книга</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Marck+Script&family=Manrope:wght@400;500;600;700&family=Prata&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <main class="app-shell">
+    <header class="book-header">
+      <div>
+        <p class="eyebrow">МОЯ ЛИЧНАЯ КНИГА</p>
+        <h1>LIFE <span>OS</span></h1>
+      </div>
+      <button class="date-seal" id="dateSeal" aria-label="Сегодня"></button>
+    </header>
+
+    <section class="page active" id="today" data-page="today">
+      <div class="page-intro">
+        <div>
+          <p class="chapter">ГЛАВА НА СЕГОДНЯ</p>
+          <h2 id="greeting">Доброе утро</h2>
+        </div>
+        <p class="date-copy" id="fullDate"></p>
+      </div>
+
+      <div class="bento-grid">
+        <article class="card focus-card large-card">
+          <div class="card-heading">
+            <div>
+              <span class="kicker">ГЛАВНОЕ</span>
+              <h3>Планы на день</h3>
+            </div>
+            <button class="soft-button" data-open-form="plan">Добавить</button>
+          </div>
+          <div id="todayPlans" class="compact-list"></div>
+        </article>
+
+        <article class="card progress-card">
+          <span class="kicker">РИТМ</span>
+          <div class="ring" id="habitRing"><span id="habitPercent">0%</span></div>
+          <p id="habitSummary">Добавьте первую привычку</p>
+        </article>
+
+        <article class="card quote-card">
+          <span class="quote-mark">“</span>
+          <p>Маленькие шаги каждый день создают большую историю.</p>
+        </article>
+
+        <article class="card diary-preview large-card">
+          <div class="card-heading">
+            <div>
+              <span class="kicker">ПОСЛЕДНЯЯ СТРАНИЦА</span>
+              <h3>Из дневника</h3>
+            </div>
+            <button class="icon-button" data-go="diary" aria-label="Открыть дневник">⌁</button>
+          </div>
+          <div id="latestDiary"></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="page" id="plans" data-page="plans">
+      <div class="page-intro">
+        <div>
+          <p class="chapter">ГЛАВА ВТОРАЯ</p>
+          <h2>Планы</h2>
+        </div>
+        <button class="primary-button" data-open-form="plan">Новый план</button>
+      </div>
+      <div class="plan-horizon-block">
+        <span class="horizon-label">ГОРИЗОНТ ПЛАНИРОВАНИЯ</span>
+        <div class="plan-horizons" id="planHorizons">
+          <button class="horizon-tab active" data-horizon="today">Сегодня</button>
+          <button class="horizon-tab" data-horizon="week">Неделя</button>
+          <button class="horizon-tab" data-horizon="month">Месяц</button>
+          <button class="horizon-tab" data-horizon="year">Год</button>
+          <button class="horizon-tab" data-horizon="life">Жизнь</button>
+        </div>
+      </div>
+      <div class="filter-row" id="planFilters">
+        <button class="filter active" data-filter="all">Все</button>
+        <button class="filter" data-filter="active">В работе</button>
+        <button class="filter" data-filter="done">Готово</button>
+      </div>
+      <div class="page-stack">
+        <div id="plansList" class="record-list"></div>
+      </div>
+    </section>
+
+    <section class="page" id="habits" data-page="habits">
+      <div class="page-intro">
+        <div>
+          <p class="chapter">ГЛАВА ТРЕТЬЯ</p>
+          <h2>Привычки</h2>
+        </div>
+        <button class="primary-button" data-open-form="habit">Новая привычка</button>
+      </div>
+      <article class="habit-overview">
+        <div>
+          <span class="kicker">СЕГОДНЯ</span>
+          <strong id="habitCount">0 из 0</strong>
+          <p>Каждая отметка — маленькое обещание себе.</p>
+        </div>
+        <div class="mini-progress"><span id="habitBar"></span></div>
+      </article>
+      <div class="page-stack habit-paper">
+        <div id="habitsList" class="record-list"></div>
+      </div>
+    </section>
+
+    <section class="page" id="diary" data-page="diary">
+      <div class="page-intro">
+        <div>
+          <p class="chapter">ЛИЧНЫЕ СТРАНИЦЫ</p>
+          <h2>Дневник</h2>
+        </div>
+        <button class="primary-button ink-button" data-open-form="diary">Новая запись</button>
+      </div>
+      <p class="diary-lead">Место для мыслей, воспоминаний и всего, что хочется сохранить.</p>
+      <div class="diary-navigation" aria-label="Навигация по дневнику">
+        <div class="diary-nav-bar">
+          <button class="period-button" data-calendar-step="-1" aria-label="Предыдущий месяц"><span id="previousMonthLabel"></span></button>
+          <button class="month-button" id="calendarToggle" aria-expanded="false" aria-controls="diaryCalendar">
+            <span id="calendarMonthLabel"></span>
+            <small>выбрать дату</small>
+          </button>
+          <button class="period-button" data-calendar-step="1" aria-label="Следующий месяц"><span id="nextMonthLabel"></span></button>
+        </div>
+        <div class="diary-calendar hidden" id="diaryCalendar">
+          <div class="calendar-weekdays" aria-hidden="true">
+            <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+          </div>
+          <div class="calendar-grid" id="calendarGrid"></div>
+          <div class="calendar-year-nav">
+            <button data-calendar-step="-12">Год назад</button>
+            <button data-calendar-step="12">Год вперёд</button>
+          </div>
+          <div class="calendar-legend"><i></i><span>В этот день есть запись</span></div>
+        </div>
+        <div class="diary-context hidden" id="diaryContext">
+          <span id="diaryContextText"></span>
+          <button id="showAllDiary">Показать все записи</button>
+        </div>
+      </div>
+      <div id="diaryList" class="diary-list"></div>
+    </section>
+
+    <section class="page" id="profile" data-page="profile">
+      <div class="page-intro">
+        <div>
+          <p class="chapter">ГЛАВА ПЯТАЯ</p>
+          <h2>Саморазвитие</h2>
+        </div>
+        <button class="primary-button" id="addGrowthItem" data-open-form="book">Добавить книгу</button>
+      </div>
+      <p class="growth-lead">Книги дают идеи, конспекты сохраняют главное, а навыки превращают знания в жизнь.</p>
+      <div class="growth-tabs" id="growthTabs">
+        <button class="growth-tab active" data-growth-view="books"><span>▤</span>Книги</button>
+        <button class="growth-tab" data-growth-view="notes"><span>✎</span>Конспекты</button>
+        <button class="growth-tab" data-growth-view="skills"><span>✦</span>Навыки</button>
+      </div>
+      <div class="growth-summary" id="growthSummary"></div>
+      <div class="growth-list" id="growthList"></div>
+      <div class="local-note">Все материалы сохраняются только на этом устройстве.</div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Основная навигация">
+    <button class="nav-item active" data-target="today"><span class="nav-icon">⌂</span><span>Сегодня</span></button>
+    <button class="nav-item" data-target="plans"><span class="nav-icon">✓</span><span>Планы</span></button>
+    <button class="nav-item" data-target="habits"><span class="nav-icon">◌</span><span>Привычки</span></button>
+    <button class="nav-item" data-target="diary"><span class="nav-icon">✎</span><span>Дневник</span></button>
+    <button class="nav-item" data-target="profile"><span class="nav-icon">✦</span><span>Развитие</span></button>
+  </nav>
+
+  <dialog id="editorDialog" class="editor-dialog">
+    <form method="dialog" id="editorForm">
+      <div class="dialog-topline">
+        <div>
+          <p class="chapter" id="dialogChapter">НОВАЯ ЗАПИСЬ</p>
+          <h2 id="dialogTitle">Добавить</h2>
+        </div>
+        <button type="button" class="close-button" id="closeDialog" aria-label="Закрыть">×</button>
+      </div>
+      <input type="hidden" id="recordType" />
+      <input type="hidden" id="recordId" />
+      <label class="field" id="titleField">
+        <span id="titleLabel">Название</span>
+        <input id="recordTitle" maxlength="100" autocomplete="off" />
+      </label>
+      <label class="field hidden" id="detailField">
+        <span id="detailLabel">Автор</span>
+        <input id="recordDetail" maxlength="140" autocomplete="off" />
+      </label>
+      <label class="field hidden" id="growthStatusField">
+        <span>Статус</span>
+        <select id="recordGrowthStatus"></select>
+      </label>
+      <label class="field" id="dateField">
+        <span>Дата</span>
+        <input id="recordDate" type="date" />
+      </label>
+      <label class="field" id="horizonField">
+        <span>Горизонт планирования</span>
+        <select id="recordHorizon">
+          <option value="today">Сегодня</option>
+          <option value="week">На неделю</option>
+          <option value="month">На месяц</option>
+          <option value="year">На год</option>
+          <option value="life">На жизнь</option>
+        </select>
+      </label>
+      <label class="field" id="categoryField">
+        <span>Раздел</span>
+        <select id="recordCategory">
+          <option value="Личное">Личное</option>
+          <option value="Работа">Работа</option>
+          <option value="Здоровье">Здоровье</option>
+          <option value="Развитие">Развитие</option>
+        </select>
+      </label>
+      <label class="field" id="iconField">
+        <span>Знак привычки</span>
+        <select id="recordIcon">
+          <option value="☀">☀ Солнце</option>
+          <option value="✦">✦ Звезда</option>
+          <option value="♡">♡ Сердце</option>
+          <option value="☕">☕ Чашка</option>
+          <option value="❧">❧ Лист</option>
+          <option value="◐">◐ Луна</option>
+        </select>
+      </label>
+      <label class="field" id="bodyField">
+        <span>Текст записи</span>
+        <textarea id="recordBody" rows="8" maxlength="6000" placeholder="Пишите свободно…"></textarea>
+      </label>
+      <p class="validation" id="validation"></p>
+      <button class="save-button" type="submit">Сохранить страницу</button>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#283832"/>
+  <path d="M112 124c0-18 14-32 32-32h112v308H144c-18 0-32-14-32-32V124Z" fill="#f7f1e6"/>
+  <path d="M400 124c0-18-14-32-32-32H256v308h112c18 0 32-14 32-32V124Z" fill="#ece2cf"/>
+  <path d="M256 112v288" stroke="#bd745b" stroke-width="10"/>
+  <path d="M151 174h66M151 218h66M295 174h66M295 218h66" stroke="#6c8375" stroke-width="12" stroke-linecap="round"/>
+  <text x="256" y="327" text-anchor="middle" font-family="Georgia,serif" font-size="72" font-weight="700" fill="#283832">LIFE</text>
+</svg>
